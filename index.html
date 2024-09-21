@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map with Routing: Wichita to Fort Worth</title>
+    <title>Leaflet Map with National Parks and Route</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Leaflet Routing Machine CSS -->
@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<h1>Travel Route: Wichita, KS to Fort Worth, TX (Following Roads)</h1>
+<h1>Travel Route: Wichita, Albuquerque, Fort Worth, and National Parks</h1>
 
 <div id="map"></div>
 
@@ -36,14 +36,32 @@
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Define waypoints (Wichita and Fort Worth)
+    // Define waypoints for cities and national parks
     var wichita = L.latLng(37.6872, -97.3301);
+    var albuquerque = L.latLng(35.0844, -106.6504);
     var fortWorth = L.latLng(32.7555, -97.3308);
+    var joshuaTree = L.latLng(33.8734, -115.9010);
+    var channelIslands = L.latLng(34.0092, -119.7785);
+    var sequoia = L.latLng(36.4864, -118.5658);
+    var kingsCanyon = L.latLng(36.8879, -118.5551);
+    var yosemite = L.latLng(37.8651, -119.5383);
 
-    // Add routing control
+    // Add routing control with all waypoints
     L.Routing.control({
-        waypoints: [wichita, fortWorth], // From Wichita to Fort Worth
-        routeWhileDragging: true // Allows dragging of the route if needed
+        waypoints: [
+            wichita,      // Wichita, KS
+            albuquerque,  // Albuquerque, NM
+            fortWorth,    // Fort Worth, TX
+            joshuaTree,   // Joshua Tree National Park
+            channelIslands, // Channel Islands National Park
+            sequoia,      // Sequoia National Park
+            kingsCanyon,  // Kings Canyon National Park
+            yosemite      // Yosemite National Park
+        ],
+        routeWhileDragging: true, // Allows dragging of the route if needed
+        createMarker: function() { return null; }, // Disables the markers for directions
+        addWaypoints: false, // Prevents users from adding additional waypoints
+        show: false, // Hides the directions panel
     }).addTo(map);
 
 </script>
