@@ -3,49 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map: Wichita to Fort Worth</title>
+    <title>Leaflet Map with Routing: Wichita to Fort Worth</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <style>
         #map {
-            height: 600px; /* Set the map height */
+            height: 600px;
             width: 100%;
         }
     </style>
 </head>
 <body>
 
-<h1>Travel Route: Wichita, KS to Fort Worth, TX</h1>
+<h1>Travel Route: Wichita, KS to Fort Worth, TX (Following Roads)</h1>
 
-<!-- Map Container -->
 <div id="map"></div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-    // Initialize the map and set its view to the US, centered between Wichita and Fort Worth
-    var map = L.map('map').setView([36, -97], 5); // Zoom level 5 to get a good view of the US
+<!-- Leaflet Routing Machine JS -->
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-    // Load and display map tiles from OpenStreetMap
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([36, -97], 5); // Zoom level 5
+
+    // Load and display map tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Define the coordinates for Wichita and Fort Worth
-    var wichita = [37.6872, -97.3301]; // Wichita, KS
-    var fortWorth = [32.7555, -97.3308]; // Fort Worth, TX
+    // Define waypoints (Wichita and Fort Worth)
+    var wichita = L.latLng(37.6872, -97.3301);
+    var fortWorth = L.latLng(32.7555, -97.3308);
 
-    // Add markers for each city
-    var marker1 = L.marker(wichita).addTo(map).bindPopup("<b>Wichita, KS</b>").openPopup();
-    var marker2 = L.marker(fortWorth).addTo(map).bindPopup("<b>Fort Worth, TX</b>");
-
-    // Add a polyline (route) between the two cities
-    var latlngs = [wichita, fortWorth];
-    var polyline = L.polyline(latlngs, {color: 'blue'}).addTo(map);
-
-    // Zoom the map to fit the markers and polyline
-    map.fitBounds(polyline.getBounds());
+    // Add routing control
+    L.Routing.control({
+        waypoints: [wichita, fortWorth], // From Wichita to Fort Worth
+        routeWhileDragging: true // Allows dragging of the route if needed
+    }).addTo(map);
 
 </script>
 
